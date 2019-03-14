@@ -8,6 +8,7 @@ import saspy
 import pandas as pd
 from time import time
 from IPython.display import display
+from IPython.display import HTML
 
 # starting the SAS session
 sas = saspy.SASsession(cfgname='autogen_winlocal')
@@ -16,14 +17,18 @@ sas = saspy.SASsession(cfgname='autogen_winlocal')
 
 #The foloowing method below display how to read a csv file using pandas and then reading in
 #the data frome into a SAS object
-cen_data0_pd = pd.read_csv("C:\\Users\\negraj\\Documents\\Learning\\SAS and SASPy\\SASPy-Examples\\census.csv")
-cen_data0 = sas.df2sd(cen_data0_pd) # the short form of: hr = sas.dataframe2sasdata(hr_pd)
+#cen_data0_pd = pd.read_csv("C:\\Users\\negraj\\Documents\\Learning\\SAS and SASPy\\SASPy-Examples\\census.csv")
+#cen_data0 = sas.df2sd(cen_data0_pd) # the short form of: hr = sas.dataframe2sasdata(hr_pd)
 
 #You can also read in a dataset directly into a SAS object using the code below.
-#cen_data0 = sas.read_csv("C:\\Users\\negraj\\Documents\\Learning\\SAS and SASPy\\SASPy-Examples\\census.csv")
+cen_data0 = sas.read_csv("C:\\Users\\negraj\\Documents\\Learning\\SAS and SASPy\\SASPy-Examples\\census.csv")
+
+cen_data0.columnInfo()
 
 #Display the first record
-display(cen_data0_pd.head(n=1))
-cen_data0.head()
+#display(cen_data0_pd.head(n=1))
+print("First value is:")
+
+cen_data0.head(obs=5)
 
 print("End of program")
