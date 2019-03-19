@@ -28,10 +28,15 @@ cen_data0 = sas.read_csv("C:\\Users\\negraj\\Documents\\Learning\\SAS and SASPy\
 print("First value is:")
 display(cen_data0.head(obs=1))
 
-#df = cen_data0.contents()
+#Data Exploration using SASpy
+#display the amount of observations within your data
+records = cen_data0.obs()
 
-#display(cen_data0.contents())
-#cen_data0.head(obs=5)
-#display(cen_data0.contents())
+#Number of records where individuals income is more than $50,000
+cen_data0_pd = cen_data0.to_df()
+greater_50k = cen_data0_pd['income'].value_counts()[1]
+
+display(greater_50k)
+print("greater_50k")
 
 print("End of program")
