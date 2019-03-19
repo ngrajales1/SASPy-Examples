@@ -23,12 +23,15 @@ sas = saspy.SASsession(cfgname='autogen_winlocal')
 #You can also read in a dataset directly into a SAS object using the code below.
 cen_data0 = sas.read_csv("C:\\Users\\negraj\\Documents\\Learning\\SAS and SASPy\\SASPy-Examples\\census.csv")
 
-cen_data0.columnInfo()
-
-#Display the first record
+#Display the first record to verify data was read in
 #display(cen_data0_pd.head(n=1))
 print("First value is:")
+display(cen_data0.head(obs=1))
 
-cen_data0.head(obs=5)
+#df = cen_data0.contents()
+
+#display(cen_data0.contents())
+#cen_data0.head(obs=5)
+#display(cen_data0.contents())
 
 print("End of program")
