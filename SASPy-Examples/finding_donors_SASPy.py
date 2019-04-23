@@ -33,10 +33,27 @@ display(cen_data0.head(obs=1))
 records = cen_data0.obs()
 
 #Number of records where individuals income is more than $50,000
+# I am first going to turn our SAS data object into a pandas data frame to utilize
+#value counts. Using value counts allows me to count distnict values very easily
 cen_data0_pd = cen_data0.to_df()
-greater_50k = cen_data0_pd['income'].value_counts()[1]
 
-display(greater_50k)
-print("greater_50k")
+#using value vounts to count ditninct values in the data set. A quick print of the value displays the
+# ditinct value and its count. The first value returned by value counts is values x <= 50K
+# the second value is values x > 50K
+greater_50k = cen_data0_pd['income'].value_counts()[1]
+_50k_or_less = cen_data0_pd['income'].value_counts()[0]
+
+# Determining the percent of individuals whose income is greater than 50k
+greater_percent = (greater_50k/(greater_50k+_50k_or_less))*100
+
+print("Total number of records: {}".format(records))
+print("Individuals making more than $50,000: {}".format(greater_50k))
+print("Individuals making at most $50,000: {}".format(_50k_or_less))
+print("Percentage of individuals making more than $50,000: {}%".format(greater_percent))
+
+# Featureset Exploration
+#explain why later
+
+column_list = cen_data0
 
 print("End of program")
