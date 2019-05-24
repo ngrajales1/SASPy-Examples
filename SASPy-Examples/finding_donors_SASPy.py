@@ -37,7 +37,7 @@ records = cen_data0.obs()
 #value counts. Using value counts allows me to count distnict values very easily
 cen_data0_pd = cen_data0.to_df()
 
-#using value vounts to count ditninct values in the data set. A quick print of the value displays the
+#Using value counts to count ditninct values in the data set. A quick print of the value displays the
 # ditinct value and its count. The first value returned by value counts is values x <= 50K
 # the second value is values x > 50K
 greater_50k = cen_data0_pd['income'].value_counts()[1]
@@ -51,9 +51,28 @@ print("Individuals making more than $50,000: {}".format(greater_50k))
 print("Individuals making at most $50,000: {}".format(_50k_or_less))
 print("Percentage of individuals making more than $50,000: {}%".format(greater_percent))
 
+#----------------------Part 2------------------------------
 # Featureset Exploration
-#explain why later
+#Transforming Skewed continous features
+#You need to use the content function to view the column number to then use it in the histogram function later
 
-column_list = cen_data0
+#drop income using pandads DataFrame
+income_data = cen_data0_pd['income']
+feature_data = cen_data0_pd.drop('income', axis=1)
+
+#convert back to SAS data object
+cen_data1_noIncome = sas.dataframe2sasdata(feature_data)
+
+#diplay histogram for capital gains and capital loss
+for col in ['capital-gain','capital-loss']:
+    cen_data1_noIncome.hist(col, title='Histogram showing'+col.upper())
+
+#As the histogram displays above the results on capital gains are highly skewed. This can cause issues later on
+# when trying to make decisons based on this data. To resolve this issue we can Mormalize the features using different
+#methods. We will first try log based methods and then a normailzed one.
+
+#log based method
+
+
 
 print("End of program")
