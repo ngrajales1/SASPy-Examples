@@ -6,6 +6,7 @@
 #Import necessary libraries for this project
 import saspy
 import pandas as pd
+import numpy as np
 from time import time
 from IPython.display import display
 from IPython.display import HTML
@@ -72,7 +73,22 @@ for col in ['capital-gain','capital-loss']:
 #methods. We will first try log based methods and then a normailzed one.
 
 #log based method
+skewed_features = ['capital_gain','capital_loss']
+#transform back to pandas dataframe 
+cen_data1_pd = cen.to_df()
 
+log_transformed_feat = pd.DataFrame(data = feature_data)
+log_transformed_feat[skewed_features] = feature_data[skewed].apply(lambda x:np.log(x+1))
 
+#changing back to SAS data object
+cen_data_logTransform = sas.dataframe2sasdata(log_transformed_feat)
+for col in ['capital_gain','capital_loss']:
+    cen_data_logTransform.hist(col, title='Histogram showing'+col.upper())
 
-print("End of program")
+#to use the proc univariate procedure you need to create a a python object that uses the SASUtil
+#library
+util = sas.sasutil()
+
+univariate_results = util.univariate(data=cen_data_logTransform, var= 'capital_gain capital_loss', histogram = 'VSCALE=PERCENT')
+dir(univariate_results)
+univariate_results.ERROR_LOG
